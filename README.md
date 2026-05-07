@@ -38,13 +38,6 @@ import SparkleUpdater
 
 let updateCoordinator = UpdateCoordinator(
     configuration: .init(
-        feedURLStringProvider: {
-            #if arch(arm64)
-            return "https://example.com/appcast-arm64.xml"
-            #else
-            return "https://example.com/appcast-x86_64.xml"
-            #endif
-        },
         betaUpdatesEnabledProvider: {
             UserDefaults.standard.bool(forKey: UpdateSettings.defaultsKeys().betaUpdatesEnabled)
         }
@@ -54,6 +47,17 @@ let updateCoordinator = UpdateCoordinator(
 updateCoordinator.initializeUpdater()
 updateCoordinator.performStartupCheckIfNeeded()
 ```
+
+## Required Info.plist keys
+
+Set your Sparkle feed URL in your app's `Info.plist` (key: `SUFeedURL`).
+
+```xml
+<key>SUFeedURL</key>
+<string>https://example.com/appcast.xml</string>
+```
+
+If this key is missing, updates stay unavailable.
 
 ## Local development without changing `Package.swift`
 
