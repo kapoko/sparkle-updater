@@ -6,18 +6,15 @@ public final class UpdateCoordinator: NSObject, ObservableObject {
   public struct Configuration {
     public let defaults: UserDefaults
     public let defaultsKeys: UpdateSettings.DefaultsKeys
-    public let feedURLStringProvider: () -> String?
     public let betaUpdatesEnabledProvider: () -> Bool
 
     public init(
       defaults: UserDefaults = .standard,
       defaultsKeys: UpdateSettings.DefaultsKeys = UpdateSettings.defaultsKeys(),
-      feedURLStringProvider: @escaping () -> String?,
       betaUpdatesEnabledProvider: @escaping () -> Bool = { false }
     ) {
       self.defaults = defaults
       self.defaultsKeys = defaultsKeys
-      self.feedURLStringProvider = feedURLStringProvider
       self.betaUpdatesEnabledProvider = betaUpdatesEnabledProvider
     }
   }
@@ -181,7 +178,7 @@ extension UpdateCoordinator: SPUUpdaterDelegate {
   }
 
   public func feedURLString(for updater: SPUUpdater) -> String? {
-    configuration.feedURLStringProvider()
+    nil
   }
 
   public func allowedChannels(for updater: SPUUpdater) -> Set<String> {
